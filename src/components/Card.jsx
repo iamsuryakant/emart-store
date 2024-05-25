@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
-import { FaCircleMinus, FaCirclePlus } from "react-icons/fa6";
-import CartItems from "./CartItem";
+// import { useEffect, useState } from "react";
+// import { FaCircleMinus, FaCirclePlus } from "react-icons/fa6";
 import { useStateValue } from "../context/StateProvider";
 
 function Card({ product }) {
@@ -35,7 +34,7 @@ function Card({ product }) {
             </div>
           </div>
         )) : (
-            <div>We're working on it come back later.</div>
+            <div>We&apos;re working on it come back later.</div>
         )
       }
     </>

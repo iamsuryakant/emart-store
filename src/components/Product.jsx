@@ -18,6 +18,7 @@ function Product() {
       }, 2000);
     }
     fetchProducts();
+    // eslint-disable-next-line
   }, []);
 
   return (
