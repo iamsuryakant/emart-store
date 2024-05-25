@@ -1,7 +1,8 @@
 import { BsCart3 } from "react-icons/bs"
-import { useStateValue } from "../context/StateProvider";
+import { useStateValue } from "../context/StateProvider"
 
-function Header({cartValue}) {
+function Header() {
+  const { cartItems } = useStateValue();
   return (
     <header className="bg-gray-200 fixed top-0 w-full drop-shadow-sm z-50">
       <nav className="container mx-auto px-6 py-5">
@@ -17,9 +18,9 @@ function Header({cartValue}) {
             <div className="relative">
               <a href="#" className="flex items-center text-gray-900 hover:text-red-600">
                 <BsCart3 className="h-7 w-7" aria-label="Cart" />
-                {cartValue && cartValue > 0 && (
+                {cartItems && cartItems.length > 0 && (
                   <span className="text-xs font-semibold text-white bg-red-600 rounded-full h-5 w-5 flex items-center justify-center relative -top-4">
-                    {cartValue}
+                    {cartItems.length}
                   </span>
                 )}
               </a>

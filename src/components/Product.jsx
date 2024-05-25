@@ -1,24 +1,24 @@
 import { useEffect, useState } from "react"
 import Card from "./Card"
+import data from "../utils/data";
 
-function Product({products, isLoading, handleAddToCart }) {
-  // const [products, setProducts] = useState([]);
-  // const [isLoading, setIsLoading] = useState(false);
+function Product() {
+  const [products, setProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const url = data['URL'];
 
-  // useEffect(() => {
-  //   setIsLoading(true);
-  //   const fetchProducts = async () => {
-  //     const response = await fetch('https://geektrust.s3.ap-southeast-1.amazonaws.com/coding-problems/shopping-cart/catalogue.json');
-  //     const data = await response.json();
-  //     setProducts(data);
-  //     setTimeout(() => {
-  //       setIsLoading(false);
-  //     }, 2000);
-  //   }
-  //   fetchProducts();
-  // }, []);
-
-  // console.log(products);
+  useEffect(() => {
+    setIsLoading(true);
+    const fetchProducts = async () => {
+      const response = await fetch(url);
+      const data = await response.json();
+      setProducts(data);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 2000);
+    }
+    fetchProducts();
+  }, []);
 
   return (
     <>
@@ -34,7 +34,7 @@ function Product({products, isLoading, handleAddToCart }) {
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4">
                 {products.length && products.map(product => {
                   return (
-                    <Card key={product.id} product = {product} handleAddToCart = {handleAddToCart} />
+                    <Card key={product.id} product = {[product]} />
                   )
                 })}
               </div>
