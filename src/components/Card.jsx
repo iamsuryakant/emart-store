@@ -1,11 +1,12 @@
-// import { useEffect, useState } from "react";
-// import { FaCircleMinus, FaCirclePlus } from "react-icons/fa6";
+import { FaCircleMinus, FaCirclePlus } from "react-icons/fa6";
 import { useStateValue } from "../context/StateProvider";
+import { useState } from "react";
 
 function Card({ product }) {
-  const { cartItems, setCartItems } = useStateValue();
+  const { cartItems, setCartItems, quantity, setQuantity } = useStateValue();
   const handleAddToCart = (item) => {
     setCartItems([...cartItems, item]);
+    setQuantity(quantity + 1);
   };
 
   return (
@@ -23,14 +24,14 @@ function Card({ product }) {
               <h1 className="mt-2 text-xl font-medium">{item.name}</h1>
                 <p className="mt-2">Rs {item.price} </p>
               </div>
-            <div>
-              <button
-                onClick={() => handleAddToCart(item)}
-                  className="text-white text-md font-semibold cursor-pointer bg-gray-900 py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-3s transform-gpu hover:scale-110"
-                >
-                  Add to cart
-                </button>
-            </div>
+                <div>
+                  <button
+                    onClick={() => handleAddToCart(item)}
+                      className="text-white text-md font-semibold cursor-pointer bg-gray-900 py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-3s transform-gpu hover:scale-110"
+                    >
+                      Add to cart
+                    </button>
+                  </div>
             </div>
           </div>
         )) : (
