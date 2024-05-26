@@ -3,10 +3,11 @@ import { RiRefreshFill } from 'react-icons/ri'
 import emptyCart from '../assets/emptyCart.svg'
 import { useStateValue } from '../context/StateProvider'
 import CartItem from './CartItem';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 function CartContainer() {
   const [total, setTotal] = useState(0);
+  const [flag, setFlag] = useState(1);
   const {cartItems, setCartItems, showCart, setShowCart} = useStateValue();
 
   const handleBackSpaceClick = () => {
@@ -16,6 +17,16 @@ function CartContainer() {
   const handleClearCart = () => {
     setCartItems([]);
   }
+
+  //TODO: Implement quantity change
+  
+  useEffect(() => {
+    let totalPrice = cartItems.reduce((total, item) => {
+        return total + item.quantity * item.price;
+    }, 0);
+
+    setTotal(totalPrice);
+  }, [flag, total]);
 
   return (
     <div className='fixed top-0 right-0 w-full md:w-[375px] h-screen bg-white drop-shadow-md flex flex-col z-[101]'>

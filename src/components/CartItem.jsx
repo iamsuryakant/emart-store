@@ -12,7 +12,7 @@ function CartItem({item}) {
       </div>
       <div className='group flex items-center gap-2 ml-auto cursor-pointer'>
           <FaCircleMinus className="text-gray-900"/>
-          <p className='w-5 h-5 rounded-sm bg-white text-gray-500 flex items-center justify-center'>{quantity}</p>
+          <p className='w-5 h-5 rounded-sm bg-white text-gray-500 flex items-center justify-center'>1</p>
           <FaCirclePlus className="text-gray-900"/>
       </div>
     </div>
