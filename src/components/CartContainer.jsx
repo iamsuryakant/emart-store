@@ -15,6 +15,11 @@ function CartContainer() {
   }
 
   const handleClearCart = () => {
+    let confirmCartClear = window.confirm(
+      'Are you sure you want to clear the cart?'
+    );
+    if (!confirmCartClear) return;
+    
     setCartItems([]);
   }
 

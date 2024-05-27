@@ -3,43 +3,44 @@ import { useStateValue } from "../context/StateProvider";
 import { useState } from "react";
 
 function Card({ product }) {
-  const { cartItems, setCartItems, quantity, setQuantity } = useStateValue();
-  const handleAddToCart = (item) => {
-    setCartItems([...cartItems, item]);
-    setQuantity(quantity + 1);
+  const { cartItems, setCartItems } = useStateValue();
+  // console.log(cartItems);
+  const handleAddToCart = item => {
+    // console.log(item);
+    let newItems = { ...item, qty: 1 };
+    setCartItems([...cartItems, newItems]);
   };
 
   return (
     <>
-      {
-        product && product.length > 0 ? product.map(item => (
-          <div key={item.name} className="bg-white max-w-xs rounded-2xl overflow-hidden drop-shadow-xl hover:shadow-xl transition duration-300 m-4">
-            <img
-              className="rounded-xl"
-              src={item.imageURL}
-              alt={item.name}
-            />
-            <div className="flex justify-between items-center p-4">
+      {product && product.length > 0 ? (
+        product.map(item => (
+          <div
+            key={item.id}
+            className='bg-white max-w-xs rounded-3xl overflow-hidden drop-shadow-xl hover:shadow-xl m-4'
+          >
+            <img className='rounded-xl' src={item.imageURL} alt={item.name} />
+            <div className='flex justify-between items-center p-4'>
               <div>
-              <h1 className="mt-2 text-xl font-medium">{item.name}</h1>
-                <p className="mt-2">Rs {item.price} </p>
+                <h1 className='mt-2 text-xl font-medium'>{item.name}</h1>
+                <p className='mt-2'>Rs {item.price} </p>
               </div>
-                <div>
-                  <button
-                    onClick={() => handleAddToCart(item)}
-                      className="text-white text-md font-semibold cursor-pointer bg-gray-900 py-2 px-4 rounded-lg shadow-md hover:shadow-lg transition duration-3s transform-gpu hover:scale-110"
-                    >
-                      Add to cart
-                    </button>
-                  </div>
+              <div>
+                <button
+                  onClick={() => handleAddToCart(item)}
+                  className='text-white text-lg font-medium cursor-pointer bg-gray-900 py-2 px-4 rounded-full shadow-md hover:shadow-lg'
+                >
+                  Add to cart
+                </button>
+              </div>
             </div>
           </div>
-        )) : (
-            <div>We&apos;re working on it come back later.</div>
-        )
-      }
+        ))
+      ) : (
+        <div>We&apos;re working on it come back later.</div>
+      )}
     </>
-  )
+  );
 }
 
 export default Card
