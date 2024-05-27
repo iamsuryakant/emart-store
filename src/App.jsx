@@ -2,9 +2,10 @@ import { useEffect, useState } from 'react';
 import Header from './components/Header';
 import Product from './components/Product';
 import Search from './components/Search';
-import Sidebar from './components/Sidebar';
 import { StateProvider } from './context/StateProvider';
 import data from './utils/data';
+import FilterContainer from './components/FilterContainer';
+import Loader from './components/Loader';
 
 const url = data['URL'];
 
@@ -12,7 +13,9 @@ function App() {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [query, setQuery] = useState('');
-  const [searchedProducts, setsearchedProducts] = useState([]);
+  const [searchedProducts, setSearchedProducts] = useState([]);
+  const [isFiltered, setIsFiltered] = useState(false);
+  const [filteredProducts, setFilteredProducts] = useState([]);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -25,16 +28,7 @@ function App() {
         }
 
         const data = await response.json();
-
         setProducts(data);
-
-        // FilterSearched Products
-
-        const filteredProducts = data.filter(item =>
-          item.name.toLowerCase().includes(query.toLowerCase())
-        );
-
-        setsearchedProducts(filteredProducts);
       } catch (error) {
         console.error(error.message);
       } finally {
@@ -43,20 +37,37 @@ function App() {
     };
 
     fetchProducts();
-  }, [query]);
+  }, []);
 
-  console.log(searchedProducts);
+  useEffect(() => {
+    const filterSearchedProducts = () => {
+      const filtered = products.filter(item =>
+        item.name.toLowerCase().includes(query.toLowerCase())
+      );
+      setSearchedProducts(filtered);
+    };
+
+    filterSearchedProducts();
+  }, [query, products]);
 
   return (
     <StateProvider>
       <Header />
-      {/* <CartItems/> */}
       <Search query={query} setQuery={setQuery} />
-      <Sidebar />
-      {searchedProducts.length ? (
-        <Product products={searchedProducts} isLoading={isLoading} />
+      <FilterContainer
+        products={products}
+        setFilteredProducts={setFilteredProducts}
+        filteredProducts={filteredProducts}
+        setIsFiltered={setIsFiltered}
+      />
+      {isLoading ? (
+        <Loader />
+      ) : isFiltered ? (
+        <Product products={filteredProducts} />
+      ) : query.length ? (
+        <Product products={searchedProducts} />
       ) : (
-        <Product products={products} isLoading={isLoading} />
+        <Product products={products} />
       )}
     </StateProvider>
   );
