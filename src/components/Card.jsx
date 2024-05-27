@@ -19,7 +19,7 @@ function Card({ product }) {
             key={item.id}
             className='bg-white max-w-xs rounded-3xl overflow-hidden drop-shadow-xl hover:shadow-xl m-4'
           >
-            <img className='rounded-xl' src={item.imageURL} alt={item.name} />
+            <img className='rounded-3xl' src={item.imageURL} alt={item.name} />
             <div className='flex justify-between items-center p-4'>
               <div>
                 <h1 className='mt-2 text-xl font-medium'>{item.name}</h1>

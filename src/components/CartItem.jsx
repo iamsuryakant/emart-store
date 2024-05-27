@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useStateValue } from '../context/StateProvider';
 import { FaCircleMinus, FaCirclePlus } from 'react-icons/fa6';
 
@@ -14,23 +14,39 @@ function CartItem({ item }) {
   // Modifying cartItems
   const handlePlusButtonClick = id => {
     // console.log(id);
-    cartItems.map(item => {
-      console.log(item.id);
+    const updatedCartItems = cartItems.map(item => {
       if (item.id === id) {
-        setQuantity(quantity + 1);
-        // {...item, qty: quantity+1}
+        return { ...item, qty: item.qty + 1 };
       }
+
+      return item;
     });
+    setCartItems(updatedCartItems);
   };
 
   const handleMinusButtonClick = id => {
-    cartItems.map(item => {
+    const updatedCartItems = cartItems.map(item => {
       if (item.id === id) {
-        setQuantity(quantity - 1);
-        [{ ...item, quantity: quantity - 1 }];
+        if (item.qty > 1) {
+          return { ...item, qty: item.qty - 1 };
+        }
       }
+
+      return item;
     });
+
+    setCartItems(updatedCartItems);
   };
+
+  useEffect(() => {
+    if (cartItems && cartItems.length > 0) {
+      cartItems.forEach(item => {
+        if (item.qty) {
+          setQuantity(item.qty);
+        }
+      });
+    }
+  }, [cartItems]);
 
   return (
     <div className='w-full p-1 px-2 rounded-lg bg-white flex items-center gap-2'>
