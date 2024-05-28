@@ -54,7 +54,9 @@ function Card({ product }) {
                 <button
                   onClick={() => handleAddToCart(item)}
                   className={`text-white text-lg font-medium cursor-pointer ${
-                    isClickAllowed[item.id] ? 'bg-gray-600' : 'bg-gray-900'
+                    isClickAllowed[item.id]
+                      ? 'bg-gray-400 cursor-not-allowed'
+                      : 'bg-gray-900'
                   } py-2 px-4 rounded-full shadow-md hover:shadow-lg`}
                   disabled={isClickAllowed[item.id]}
                 >
