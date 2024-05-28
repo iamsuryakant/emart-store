@@ -6,9 +6,20 @@ function Card({ product }) {
   const { cartItems, setCartItems } = useStateValue();
   // console.log(cartItems);
   const handleAddToCart = item => {
-    // console.log(item);
-    let newItems = { ...item, qty: 1 };
-    setCartItems([...cartItems, newItems]);
+    const existingItem = cartItems.find(cartItem => cartItem.id === item.id);
+    let newItems;
+
+    if (existingItem) {
+      newItems = cartItems.map(cartItem =>
+        cartItem.id === item.id
+          ? { ...cartItem, qty: cartItem.qty + 1 }
+          : cartItem
+      );
+    } else {
+      newItems = [...cartItems, { ...item, qty: 1 }];
+    }
+
+    setCartItems(newItems);
   };
 
   return (

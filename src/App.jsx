@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react';
 import Header from './components/Header';
 import Product from './components/Product';
 import Search from './components/Search';
-import { StateProvider } from './context/StateProvider';
 import data from './utils/data';
 import FilterContainer from './components/FilterContainer';
 import Loader from './components/Loader';
+import { StateProvider } from './context/StateProvider';
 
 const url = data['URL'];
 
@@ -49,6 +49,18 @@ function App() {
 
     filterSearchedProducts();
   }, [query, products]);
+
+  useEffect(() => {
+    const storageProducts = JSON.parse(localStorage.getItem('cartItems'));
+
+    if (storageProducts && storageProducts.length > 0) {
+      setProducts(storageProducts);
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('cartItems', JSON.stringify(products));
+  }, [products]);
 
   return (
     <StateProvider>

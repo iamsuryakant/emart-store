@@ -4,8 +4,7 @@ import { FaCircleMinus, FaCirclePlus } from 'react-icons/fa6';
 
 function CartItem({ item }) {
   console.log(item);
-  const { cartItems, setCartItems } = useStateValue();
-  const [quantity, setQuantity] = useState(1);
+  const { cartItems, setCartItems, quantity, setQuantity } = useStateValue();
   const [maxQty, setMaxQty] = useState(false);
   const [minQty, setMinQty] = useState(false);
 
