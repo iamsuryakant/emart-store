@@ -3,36 +3,35 @@ import { useStateValue } from '../context/StateProvider';
 import { FaCircleMinus, FaCirclePlus } from 'react-icons/fa6';
 
 function CartItem({ item }) {
-  console.log(item);
+  // console.log(item);
   const { cartItems, setCartItems, quantity, setQuantity } = useStateValue();
-  const [maxQty, setMaxQty] = useState(false);
-  const [minQty, setMinQty] = useState(false);
-
-  // console.log(cartItems);
 
   // Modifying cartItems
   const handlePlusButtonClick = id => {
-    // console.log(id);
     const updatedCartItems = cartItems.map(item => {
-      if (item.id === id) {
+      // console.log(item);
+      if (item.id === id && item.qty < item.quantity) {
         return { ...item, qty: item.qty + 1 };
       }
 
+      alert('Maximum quantity limit exceeded');
       return item;
     });
+
     setCartItems(updatedCartItems);
   };
 
   const handleMinusButtonClick = id => {
-    const updatedCartItems = cartItems.map(item => {
-      if (item.id === id) {
-        if (item.qty > 1) {
-          return { ...item, qty: item.qty - 1 };
+    const updatedCartItems = cartItems
+      .map(item => {
+        if (item.id === id) {
+          if (item.qty >= 1) {
+            return { ...item, qty: item.qty - 1 };
+          }
         }
-      }
-
-      return item;
-    });
+        return item;
+      })
+      .filter(item => item.qty > 0);
 
     setCartItems(updatedCartItems);
   };
@@ -45,7 +44,7 @@ function CartItem({ item }) {
         }
       });
     }
-  }, [cartItems]);
+  }, []);
 
   return (
     <div className='w-full p-1 px-2 rounded-lg bg-white flex items-center gap-2'>
@@ -64,16 +63,16 @@ function CartItem({ item }) {
         <button>
           <FaCircleMinus
             className='text-gray-900'
-            onClick={() => handleMinusButtonClick(item.id)}
+            onClick={() => handleMinusButtonClick(item?.id)}
           />
         </button>
         <p className='w-5 h-5 rounded-sm bg-white text-gray-500 flex items-center justify-center'>
-          {quantity}
+          {item?.qty}
         </p>
         <button>
           <FaCirclePlus
             className='text-gray-900'
-            onClick={() => handlePlusButtonClick(item.id)}
+            onClick={() => handlePlusButtonClick(item?.id)}
           />
         </button>
       </div>

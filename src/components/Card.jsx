@@ -1,10 +1,11 @@
 import { FaCircleMinus, FaCirclePlus } from "react-icons/fa6";
 import { useStateValue } from "../context/StateProvider";
-import { useState } from "react";
+import { useEffect, useState } from 'react';
 
 function Card({ product }) {
   const { cartItems, setCartItems } = useStateValue();
-  // console.log(cartItems);
+  const [isClickAllowed, setIsClickAllowed] = useState({});
+
   const handleAddToCart = item => {
     const existingItem = cartItems.find(cartItem => cartItem.id === item.id);
     let newItems;
@@ -21,6 +22,19 @@ function Card({ product }) {
 
     setCartItems(newItems);
   };
+
+  useEffect(() => {
+    let updatedButtonsState = {};
+    cartItems.forEach(cartItem => {
+      if (cartItem.qty >= cartItem.quantity) {
+        updatedButtonsState[cartItem.id] = true;
+      } else {
+        updatedButtonsState[cartItem.id] = false;
+      }
+    });
+
+    setIsClickAllowed(updatedButtonsState);
+  }, [cartItems]);
 
   return (
     <>
@@ -39,7 +53,10 @@ function Card({ product }) {
               <div>
                 <button
                   onClick={() => handleAddToCart(item)}
-                  className='text-white text-lg font-medium cursor-pointer bg-gray-900 py-2 px-4 rounded-full shadow-md hover:shadow-lg'
+                  className={`text-white text-lg font-medium cursor-pointer ${
+                    isClickAllowed[item.id] ? 'bg-gray-600' : 'bg-gray-900'
+                  } py-2 px-4 rounded-full shadow-md hover:shadow-lg`}
+                  disabled={isClickAllowed[item.id]}
                 >
                   Add to cart
                 </button>
