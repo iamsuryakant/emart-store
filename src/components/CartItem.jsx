@@ -44,7 +44,7 @@ function CartItem({ item }) {
         }
       });
     }
-  }, []);
+  }, [cartItems]);
 
   return (
     <div className='w-full p-1 px-2 rounded-lg bg-white flex items-center gap-2'>

@@ -45,6 +45,8 @@ function CartContainer() {
     setTotal(totalPrice);
   }, [quantity, total]);
 
+  console.log(total);
+
   return (
     <div className='fixed top-0 right-0 w-full md:w-[375px] h-screen bg-white drop-shadow-md flex flex-col z-[101]'>
       <div className='w-full flex items-center justify-between p-4 cursor-pointer'>
